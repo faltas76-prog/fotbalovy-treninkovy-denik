@@ -14,6 +14,7 @@
             --text-light: #4B5563;
             --border: #E5E7EB;
             --success: #10B981;
+            --accent: #F59E0B; /* Barva pro závěrečné hodnocení */
         }
 
         * {
@@ -74,6 +75,15 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+        
+        .card-header.evaluation {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .card-header.evaluation .day-badge {
+            color: var(--accent);
         }
 
         .card-header h3 {
@@ -240,6 +250,15 @@
             background: var(--primary);
             transform: scale(0.98);
         }
+        
+        .save-btn.eval-btn {
+            background: var(--accent);
+            box-shadow: 0 2px 4px rgba(245, 158, 11, 0.3);
+        }
+        
+        .save-btn.eval-btn:active {
+            background: #D97706;
+        }
 
         .saved-msg {
             color: var(--success);
@@ -261,106 +280,25 @@
     </header>
 
     <div class="container" id="app">
-        <!-- Karty se generují automaticky -->
-    </div>
+        </div>
 
     <script>
         const trainingData = [
-            {
-                day: 1,
-                focus: "Lehký běh + Mobilita + Core",
-                tasks: [
-                    { time: "10 min", title: "Rozcvičení", desc: "Lehký klus, dynamické protažení, mobilita kloubů." },
-                    { time: "30 min", title: "Hlavní část", desc: "Pohodové tempo (65-70% TFmax). Dýchat nosem." },
-                    { time: "15 min", title: "Core", desc: "Plank, dead bug, bird dog, zkracovačky." },
-                    { time: "10 min", title: "Protažení", desc: "Statické protažení celého těla." }
-                ]
-            },
-            {
-                day: 2,
-                focus: "Silový trénink (vlastní váha)",
-                tasks: [
-                    { time: "10 min", title: "Rozcvičení", desc: "Švihadlo, dynamický strečink, aktivace středu." },
-                    { time: "40 min", title: "Hlavní část", desc: "Kruhový trénink (kliky, dřepy, výpady, hip thrust). 4 kola." },
-                    { time: "10 min", title: "Core", desc: "Plank variace, mountain climbers." },
-                    { time: "10 min", title: "Protažení", desc: "Statické protažení na nohy." }
-                ]
-            },
-            {
-                day: 3,
-                focus: "Intervaly – Rychlost a vytrvalost",
-                tasks: [
-                    { time: "15 min", title: "Rozcvičení", desc: "Běžecká abeceda, rovinky na zahřátí." },
-                    { time: "35 min", title: "Hlavní část", desc: "10x 200m sprint (80-85% max), pauza meziklusem 200m." },
-                    { time: "10 min", title: "Výklus", desc: "Lehký klus + hluboké dýchání." },
-                    { time: "10 min", title: "Protažení", desc: "Zaměření na lýtka a hamstringy." }
-                ]
-            },
-            {
-                day: 4,
-                focus: "Aktivní regenerace",
-                tasks: [
-                    { time: "45-60 min", title: "Aktivní pohyb", desc: "Plavání, jízda na kole nebo chůze (intenzita 50-60%)." },
-                    { time: "15 min", title: "Mobilita", desc: "Foam rolling, protažení ztuhlých partií." },
-                    { time: "10 min", title: "Relaxace", desc: "Dýchací cvičení, uvolnění." }
-                ]
-            },
-            {
-                day: 5,
-                focus: "Fotbalová obratnost + Sprinty",
-                tasks: [
-                    { time: "15 min", title: "Rozcvičení", desc: "Lehký klus, koordinace s míčem." },
-                    { time: "30 min", title: "Hlavní část", desc: "Dribling mezi kužely. Sprinty 5x20m naplno." },
-                    { time: "10 min", title: "Střelba", desc: "Střelba na bránu z hranice vápna." },
-                    { time: "15 min", title: "Výklus/Protažení", desc: "Lehký klus, statický strečink." }
-                ]
-            },
-            {
-                day: 6,
-                focus: "Volno nebo lehká turistika",
-                tasks: [
-                    { time: "Volno", title: "Odpočinek", desc: "Dopřej tělu regeneraci, načerpej energii." },
-                    { time: "Nebo", title: "Turistika", desc: "Lehká procházka v přírodě 60-120 min." },
-                    { time: "15 min", title: "Protažení", desc: "Lehká večerní mobilita." }
-                ]
-            },
-            {
-                day: 7,
-                focus: "Tempový běh + Core",
-                tasks: [
-                    { time: "15 min", title: "Rozcvičení", desc: "Lehký klus, dynamický strečink." },
-                    { time: "30 min", title: "Tempový běh", desc: "Udržuj tempo na 75-80% TFmax." },
-                    { time: "15 min", title: "Core", desc: "Russian twist, leg raises, boční plank." },
-                    { time: "10 min", title: "Protažení", desc: "Statický strečink celého těla." }
-                ]
-            },
-            {
-                day: 8,
-                focus: "Kruhový trénink",
-                tasks: [
-                    { time: "10 min", title: "Rozcvičení", desc: "Švihadlo, dynamická aktivace." },
-                    { time: "40 min", title: "Kruháč", desc: "8 cviků, 40s práce / 20s pauza. 4 kola." },
-                    { time: "10 min", title: "Protažení", desc: "Statické protažení na vršek těla." }
-                ]
-            },
-            {
-                day: 9,
-                focus: "Fartlek / Hra s rychlostí",
-                tasks: [
-                    { time: "15 min", title: "Rozcvičení", desc: "Lehký klus a dynamika." },
-                    { time: "45 min", title: "Fartlek", desc: "Běh v terénu. Střídání tempa podle pocitu." },
-                    { time: "10 min", title: "Výklus", desc: "Velmi volný klus." },
-                    { time: "10 min", title: "Protažení", desc: "Důkladný statický strečink." }
-                ]
-            },
-            {
-                day: 10,
-                focus: "Regenerační klus + Protažení",
-                tasks: [
-                    { time: "30 min", title: "Klus", desc: "Pohodové tempo, uvolnění svalů." },
-                    { time: "15 min", title: "Mobilita", desc: "Komplexní protažení celého těla." },
-                    { time: "15 min", title: "Relaxace", desc: "Mentální uvolnění, zhodnocení bloku." }
-                ]
+            { day: 1, focus: "Lehký běh + Mobilita + Core", tasks: [ { time: "10 min", title: "Rozcvičení", desc: "Lehký klus, dynamické protažení, mobilita kloubů." }, { time: "30 min", title: "Hlavní část", desc: "Pohodové tempo (65-70% TFmax). Dýchat nosem." }, { time: "15 min", title: "Core", desc: "Plank, dead bug, bird dog, zkracovačky." }, { time: "10 min", title: "Protažení", desc: "Statické protažení celého těla." } ] },
+            { day: 2, focus: "Silový trénink (vlastní váha)", tasks: [ { time: "10 min", title: "Rozcvičení", desc: "Švihadlo, dynamický strečink, aktivace středu." }, { time: "40 min", title: "Hlavní část", desc: "Kruhový trénink (kliky, dřepy, výpady, hip thrust). 4 kola." }, { time: "10 min", title: "Core", desc: "Plank variace, mountain climbers." }, { time: "10 min", title: "Protažení", desc: "Statické protažení na nohy." } ] },
+            { day: 3, focus: "Intervaly – Rychlost a vytrvalost", tasks: [ { time: "15 min", title: "Rozcvičení", desc: "Běžecká abeceda, rovinky na zahřátí." }, { time: "35 min", title: "Hlavní část", desc: "10x 200m sprint (80-85% max), pauza meziklusem 200m." }, { time: "10 min", title: "Výklus", desc: "Lehký klus + hluboké dýchání." }, { time: "10 min", title: "Protažení", desc: "Zaměření na lýtka a hamstringy." } ] },
+            { day: 4, focus: "Aktivní regenerace", tasks: [ { time: "45-60 min", title: "Aktivní pohyb", desc: "Plavání, jízda na kole nebo chůze (intenzita 50-60%)." }, { time: "15 min", title: "Mobilita", desc: "Foam rolling, protažení ztuhlých partií." }, { time: "10 min", title: "Relaxace", desc: "Dýchací cvičení, uvolnění." } ] },
+            { day: 5, focus: "Fotbalová obratnost + Sprinty", tasks: [ { time: "15 min", title: "Rozcvičení", desc: "Lehký klus, koordinace s míčem." }, { time: "30 min", title: "Hlavní část", desc: "Dribling mezi kužely. Sprinty 5x20m naplno." }, { time: "10 min", title: "Střelba", desc: "Střelba na bránu z hranice vápna." }, { time: "15 min", title: "Výklus/Protažení", desc: "Lehký klus, statický strečink." } ] },
+            { day: 6, focus: "Volno nebo lehká turistika", tasks: [ { time: "Volno", title: "Odpočinek", desc: "Dopřej tělu regeneraci, načerpej energii." }, { time: "Nebo", title: "Turistika", desc: "Lehká procházka v přírodě 60-120 min." }, { time: "15 min", title: "Protažení", desc: "Lehká večerní mobilita." } ] },
+            { day: 7, focus: "Tempový běh + Core", tasks: [ { time: "15 min", title: "Rozcvičení", desc: "Lehký klus, dynamický strečink." }, { time: "30 min", title: "Tempový běh", desc: "Udržuj tempo na 75-80% TFmax." }, { time: "15 min", title: "Core", desc: "Russian twist, leg raises, boční plank." }, { time: "10 min", title: "Protažení", desc: "Statický strečink celého těla." } ] },
+            { day: 8, focus: "Kruhový trénink", tasks: [ { time: "10 min", title: "Rozcvičení", desc: "Švihadlo, dynamická aktivace." }, { time: "40 min", title: "Kruháč", desc: "8 cviků, 40s práce / 20s pauza. 4 kola." }, { time: "10 min", title: "Protažení", desc: "Statické protažení na vršek těla." } ] },
+            { day: 9, focus: "Fartlek / Hra s rychlostí", tasks: [ { time: "15 min", title: "Rozcvičení", desc: "Lehký klus a dynamika." }, { time: "45 min", title: "Fartlek", desc: "Běh v terénu. Střídání tempa podle pocitu." }, { time: "10 min", title: "Výklus", desc: "Velmi volný klus." }, { time: "10 min", title: "Protažení", desc: "Důkladný statický strečink." } ] },
+            { day: 10, focus: "Regenerační klus + Protažení", tasks: [ { time: "30 min", title: "Klus", desc: "Pohodové tempo, uvolnění svalů." }, { time: "15 min", title: "Mobilita", desc: "Komplexní protažení celého těla." }, { time: "15 min", title: "Relaxace", desc: "Mentální uvolnění, zhodnocení bloku." } ] },
+            // Nový den 11 pro zhodnocení
+            { 
+                day: 11, 
+                isEvaluation: true,
+                focus: "Reflexe uplynulých 10 dní a plány dál", 
             }
         ];
 
@@ -368,66 +306,119 @@
 
         function renderApp() {
             trainingData.forEach(dayInfo => {
-                const savedData = JSON.parse(localStorage.getItem(`day_${dayInfo.day}`)) || { rpe: '', sleep: '', water: '', notes: '', checkedTasks: [] };
-
-                let tasksHtml = dayInfo.tasks.map((task, index) => {
-                    const isChecked = savedData.checkedTasks && savedData.checkedTasks.includes(index) ? 'checked' : '';
-                    return `
-                        <li class="task-item">
-                            <input type="checkbox" id="task_${dayInfo.day}_${index}" ${isChecked} class="task-checkbox">
-                            <label for="task_${dayInfo.day}_${index}" class="task-label">
-                                <strong>${task.time} | ${task.title}</strong> ${task.desc}
-                            </label>
-                        </li>
-                    `;
-                }).join(''); // OPRAVA: Zde chyběla složená závorka "}"
-
-                const card = document.createElement('div');
-                card.className = 'card';
-                card.innerHTML = `
-                    <div class="card-header">
-                        <h3>DEN ${dayInfo.day}</h3>
-                        <span class="day-badge">10 dnů</span>
-                    </div>
-                    <div class="card-body">
-                        <span class="focus-title">${dayInfo.focus}</span>
-                        <ul class="training-list">
-                            ${tasksHtml}
-                        </ul>
-
-                        <div class="metrics-section">
-                            <div class="metrics-title">Hodnocení dne</div>
-                            
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label>Náročnost (1-10)</label>
-                                    <input type="number" inputmode="numeric" min="1" max="10" id="rpe_${dayInfo.day}" value="${savedData.rpe}" placeholder="Např. 7">
-                                </div>
-                                <div class="form-group">
-                                    <label>Spánek (h)</label>
-                                    <input type="number" inputmode="decimal" step="0.5" id="sleep_${dayInfo.day}" value="${savedData.sleep}" placeholder="Např. 8">
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label>Vypitá voda (litry)</label>
-                                <input type="number" inputmode="decimal" step="0.5" id="water_${dayInfo.day}" value="${savedData.water}" placeholder="Např. 3.5">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Moje poznámky k tréninku</label>
-                                <textarea id="notes_${dayInfo.day}" placeholder="Jak se dnes běhalo/cvičilo?">${savedData.notes}</textarea>
-                            </div>
-
-                            <button class="save-btn" onclick="saveData(${dayInfo.day})">Uložit výsledky</button>
-                            <div class="saved-msg" id="msg_${dayInfo.day}">Úspěšně uloženo!</div>
+                
+                // Větvení: Je to normální den, nebo Závěrečné hodnocení?
+                if (dayInfo.isEvaluation) {
+                    const savedEval = JSON.parse(localStorage.getItem('evaluation_data')) || { goals: '', struggle: '', phys: '', ment: '', nextSteps: '' };
+                    
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-header evaluation">
+                            <h3>ZÁVĚREČNÉ HODNOCENÍ</h3>
+                            <span class="day-badge">Konec bloku</span>
                         </div>
-                    </div>
-                `;
-                appContainer.appendChild(card);
+                        <div class="card-body">
+                            <span class="focus-title" style="color: var(--accent); border-bottom-color: #FDE68A;">${dayInfo.focus}</span>
+                            
+                            <div class="metrics-section" style="background: #FFFBEB; border-color: #FDE68A;">
+                                <div class="form-group">
+                                    <label>Podařilo se mi splnit cíl (udržení kondice)?</label>
+                                    <textarea id="eval_goals" placeholder="Např. Ano, cítím se celkově lépe a zvládl jsem intervaly...">${savedEval.goals}</textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Co mi dělalo největší problém?</label>
+                                    <textarea id="eval_struggle" placeholder="Např. Přinutit se k tréninku 8. den, dodržet spánek...">${savedEval.struggle}</textarea>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Fyzický pocit (1-10)</label>
+                                        <input type="number" inputmode="numeric" min="1" max="10" id="eval_phys" value="${savedEval.phys}" placeholder="10=Top">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mentální pocit (1-10)</label>
+                                        <input type="number" inputmode="numeric" min="1" max="10" id="eval_ment" value="${savedEval.ment}" placeholder="10=Top">
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Na co se zaměřím v dalším bloku?</label>
+                                    <textarea id="eval_nextSteps" placeholder="Např. Více práce s míčem, těžší silový trénink...">${savedEval.nextSteps}</textarea>
+                                </div>
+
+                                <button class="save-btn eval-btn" onclick="saveEvaluation()">Uložit hodnocení</button>
+                                <div class="saved-msg" id="msg_eval">Zhodnocení úspěšně uloženo!</div>
+                            </div>
+                        </div>
+                    `;
+                    appContainer.appendChild(card);
+                    
+                } else {
+                    // Generování normálního tréninkového dne (1-10)
+                    const savedData = JSON.parse(localStorage.getItem(`day_${dayInfo.day}`)) || { rpe: '', sleep: '', water: '', notes: '', checkedTasks: [] };
+
+                    let tasksHtml = dayInfo.tasks.map((task, index) => {
+                        const isChecked = savedData.checkedTasks && savedData.checkedTasks.includes(index) ? 'checked' : '';
+                        return `
+                            <li class="task-item">
+                                <input type="checkbox" id="task_${dayInfo.day}_${index}" ${isChecked} class="task-checkbox">
+                                <label for="task_${dayInfo.day}_${index}" class="task-label">
+                                    <strong>${task.time} | ${task.title}</strong> ${task.desc}
+                                </label>
+                            </li>
+                        `;
+                    }).join('');
+
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <h3>DEN ${dayInfo.day}</h3>
+                            <span class="day-badge">10 dnů</span>
+                        </div>
+                        <div class="card-body">
+                            <span class="focus-title">${dayInfo.focus}</span>
+                            <ul class="training-list">
+                                ${tasksHtml}
+                            </ul>
+
+                            <div class="metrics-section">
+                                <div class="metrics-title">Hodnocení dne</div>
+                                
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label>Náročnost (1-10)</label>
+                                        <input type="number" inputmode="numeric" min="1" max="10" id="rpe_${dayInfo.day}" value="${savedData.rpe}" placeholder="Např. 7">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Spánek (h)</label>
+                                        <input type="number" inputmode="decimal" step="0.5" id="sleep_${dayInfo.day}" value="${savedData.sleep}" placeholder="Např. 8">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Vypitá voda (litry)</label>
+                                    <input type="number" inputmode="decimal" step="0.5" id="water_${dayInfo.day}" value="${savedData.water}" placeholder="Např. 3.5">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Moje poznámky k tréninku</label>
+                                    <textarea id="notes_${dayInfo.day}" placeholder="Jak se dnes běhalo/cvičilo?">${savedData.notes}</textarea>
+                                </div>
+
+                                <button class="save-btn" onclick="saveData(${dayInfo.day})">Uložit výsledky</button>
+                                <div class="saved-msg" id="msg_${dayInfo.day}">Úspěšně uloženo!</div>
+                            </div>
+                        </div>
+                    `;
+                    appContainer.appendChild(card);
+                }
             });
         }
 
+        // Uložení standardního dne
         function saveData(dayNum) {
             const dayInfo = trainingData.find(d => d.day === dayNum);
             const checkedTasks = [];
@@ -450,6 +441,25 @@
             localStorage.setItem(`day_${dayNum}`, JSON.stringify(dayData));
 
             const msgEl = document.getElementById(`msg_${dayNum}`);
+            msgEl.style.opacity = '1';
+            setTimeout(() => {
+                msgEl.style.opacity = '0';
+            }, 2500);
+        }
+
+        // Uložení závěrečného zhodnocení
+        function saveEvaluation() {
+            const evalData = {
+                goals: document.getElementById('eval_goals').value,
+                struggle: document.getElementById('eval_struggle').value,
+                phys: document.getElementById('eval_phys').value,
+                ment: document.getElementById('eval_ment').value,
+                nextSteps: document.getElementById('eval_nextSteps').value
+            };
+
+            localStorage.setItem('evaluation_data', JSON.stringify(evalData));
+
+            const msgEl = document.getElementById('msg_eval');
             msgEl.style.opacity = '1';
             setTimeout(() => {
                 msgEl.style.opacity = '0';
